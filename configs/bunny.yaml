@@ -1,0 +1,9 @@
+path: "data/meshes/bunny.obj"
+run_name: "outputs/bunny"
+guidance:
+  method: "image"
+  user_images_dir: "data/images/bunny_guidance_images" # obtained w/ Gemini
+solve:
+  lambda_s: 0.1
+render:
+  anchor: [90, 0]

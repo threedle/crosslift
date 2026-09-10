@@ -1,0 +1,80 @@
+[project]
+name = "crosslift"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1",
+    "torchvision",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "libigl>=2.5",
+    "cupy-cuda12x",
+    "nvdiffrast",
+    "polyscope>=2.2",
+    "cmap",
+    "draccus",
+    "pyyaml",
+    "pillow",
+    "pymeshlab>=2025.7.post1",
+    "matplotlib>=3.10.9",
+]
+
+[project.optional-dependencies]
+flux = ["diffusers>=0.31", "transformers", "accelerate", "protobuf", "sentencepiece"]
+gemini = ["google-genai", "python-dotenv"]
+
+[project.scripts]
+crosslift = "crosslift.cli:main"
+
+# The quad-extraction stage is a nanobind extension (MIQ, libQEx, Directional)
+# Users need a C++17 compiler and CMake >= 3.16
+[build-system]
+requires = ["scikit-build-core>=0.10", "nanobind>=2.0"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["src/crosslift"]
+
+
+[tool.scikit-build.cmake.define]
+CMAKE_BUILD_TYPE = "Release"
+
+# The default PyPI torch wheels are built against CUDA 13.0. nvdiffrast compiles
+# against the local nvcc (12.1 here) and refuses a major-version mismatch, so
+# torch has to come from the matching PyTorch index. Change cu121 to match your
+# CUDA toolkit — `nvcc --version` — when running elsewhere.
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[tool.uv.sources]
+nvdiffrast = { git = "https://github.com/NVlabs/nvdiffrast.git" }
+torch = { index = "pytorch-cu121" }
+torchvision = { index = "pytorch-cu121" }
+
+# nvdiffrast compiles its CUDA extension during the wheel build, so it needs
+# torch importable at build time — not just at runtime. Build isolation puts the
+# build in a clean environment where torch is absent, which is the
+# "Cannot compile nvdiffrast CUDA extension" failure. match-runtime installs the
+# same torch version that resolves for the project, so the extension is built
+# against the torch it will actually run against.
+#
+# This also needs nvcc on PATH at sync time (CUDA 12.1 here, at /usr/local/cuda).
+# If the build cannot find it, export CUDA_HOME=/usr/local/cuda first.
+[tool.uv.extra-build-dependencies]
+nvdiffrast = [{ requirement = "torch", match-runtime = true }]
+
+[dependency-groups]
+dev = [
+    "nanobind>=2.14.0",
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+src = ["src"]

@@ -1,0 +1,9 @@
+solve:
+  lambda_s: 1.0
+quad:
+  skip_curl_correction: false
+# Optional settings than can further increase robustness
+#   method: "quadwild" # only use if MIQ fails / takes too long as performance is worse
+#   smooth_iters: 25 # postprocessing to improve quad quality, can degrade alignment
+# repair_mesh: true
+# remesh.enabled: true # can be useful if mesh is very low res or has sliver triangles

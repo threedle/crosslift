@@ -1,0 +1,9 @@
+path: "data/meshes/angel.obj"
+run_name: "outputs/angel"
+guidance:
+  method: "image"
+  user_images_dir: "data/images/angel_guidance_images" # obtained w/ Gemini
+solve:
+  lambda_s: 0.1
+quad:
+  smooth_iters: 25

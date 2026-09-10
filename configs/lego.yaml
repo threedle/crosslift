@@ -1,0 +1,7 @@
+path: "data/meshes/lego.obj"
+run_name: "outputs/lego"
+guidance:
+  method: "image"
+  user_images_dir: "data/images/lego_guidance_images" # obtained w/ Flux
+solve:
+  lambda_s: 1.0

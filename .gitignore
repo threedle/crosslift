@@ -1,0 +1,13 @@
+*__pycache__*
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+_skbuild/
+third_party/
+*.so
+outputs/
+imgui.ini
+.ruff_cache/
+.env
