@@ -58,20 +58,35 @@
     });
   }
 
+  function atBottom() {
+    return window.innerHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight - 2;
+  }
+
+  function update() {
+    if (atBottom()) {
+      setActive(sections[sections.length - 1].id);
+      return;
+    }
+    var bestId = null;
+    var bestRatio = 0;
+    Object.keys(visibility).forEach(function (id) {
+      if (visibility[id] > bestRatio) {
+        bestRatio = visibility[id];
+        bestId = id;
+      }
+    });
+    if (bestId && bestRatio > 0) setActive(bestId);
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         visibility[entry.target.id] = entry.intersectionRatio;
       });
-      var bestId = null;
-      var bestRatio = 0;
-      Object.keys(visibility).forEach(function (id) {
-        if (visibility[id] > bestRatio) {
-          bestRatio = visibility[id];
-          bestId = id;
-        }
-      });
-      if (bestId && bestRatio > 0) setActive(bestId);
+      update();
     }, {
       // Treat the middle 60% of the viewport as the
       // "reading area"; whichever section overlaps it most
