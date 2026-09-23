@@ -5,7 +5,7 @@
 <a target="_blank" href="https://threedle.github.io/crosslift/"><img src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Project%20Page&up_color=lightgreen&up_message=online&url=https%3A//threedle.github.io/crosslift/" height=22></a>
 <a target="_blank" href="https://arxiv.org/abs/2605.26062"><img src="https://img.shields.io/badge/arXiv-CrossLift-ff6961.svg" height=22></a>
 
-<img src="assets/teaser.png" alt="Alt text" style="height: 400px; width: 100%; object-fit: contain;">
+<img src="assets/teaser.png" alt="CrossLift teaser" width="100%">
 
 ### Abstract
 *We present CrossLift, a technique for computing cross fields on meshes guided by visual features in images. We leverage powerful text-to-image priors that are capable of synthesizing images of feature-aligned quad meshes in 2D. We extract this signal as explicit per-pixel directions in the 2D images, which we then back-project to the mesh surface. We aggregate these candidate surface directions by performing two smooth interpolations on the mesh surface (first within each view and second across multiple views). We propose custom confidence-based weights for the candidate directions in each interpolation that allow us to resolve conflicts between candidates on the same face and smoothly interpolate our field to occluded faces. Our method is modular and can be used with many different 2D visual priors. We show additional applications to texture-aligned quad meshing as well as interactive cross-field design using coarse, user-drawn lines as signal. We demonstrate the effectiveness of CrossLift on a diverse set of both organic and mechanical shapes and produce quad meshes that exhibit superior semantic alignment as compared to existing methods.*
