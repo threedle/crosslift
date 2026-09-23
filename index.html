@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CrossLift: Lifting Cross Fields From 2D Visual Priors</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/crosslift.ico">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+  <!-- MathJax for inline LaTeX: $...$ and $$...$$ are recognized. -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        macros: {
+          ie: '\\textit{i.e.}',
+          eg: '\\textit{e.g.}',
+          cf: '\\textit{cf.}'
+        }
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="js/main.js"></script>
+  <style>
+    /* from https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css */
+    @font-face {
+      font-family: 'Academicons';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.eot') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.ttf') format('truetype'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/fonts/academicons.svg') format('svg');
+    }
+
+    .ai {
+      font-family: 'Academicons';
+      font-weight: 400;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+    }
+
+    .ai-arxiv:before {
+      content: "\e974";
+    }
+  </style>
+
+  <meta name="description" content="CrossLift: Lifting Cross Fields From 2D Visual Priors">
+  <meta name="keywords" content="Cross Fields, 3D Shape Analysis, Image Segmentation, Cross-Modality Correspondence, Cross-Domain Correspondence">
+
+  <meta property='og:title' content='CrossLift: Lifting Cross Fields From 2D Visual Priors' />
+  <meta property='og:url' content='https://threedle.github.io/crosslift/' />
+  <meta property='og:image' content='https://threedle.github.io/crosslift/assets/teaser/images/teaser.png' />
+  <meta property="og:type" content="website" />
+</head>
+
+<body>
+  <section id="intro" class="intro" aria-label="intro">
+    <div class="titlebox">
+      <h1>CrossLift:<wbr> Lifting Cross Fields From 2D Visual Priors</h1>
+    </div>
+    <div class="authors" aria-label="authors">
+      <span><a href="https://ddecatur.github.io/">Dale Decatur</a><sup>1</sup></span>
+      <span><a href="https://www.jacobserfaty.com/">Jacob Serfaty</a><sup>1</sup></span>
+      <span><a href="https://odedstein.com/">Oded Stein</a><sup>2,3</sup></span>
+      <span><a href="https://avaxman.github.io/">Amir Vaxman</a><sup>4</sup></span>
+      <span><a href="https://people.cs.uchicago.edu/~ranahanocka/">Rana Hanocka</a><sup>1</sup></span>
+    </div>
+    <div class="affiliations" aria-label="affiliations"><sup>1</sup>University of Chicago, <sup>2</sup>University of
+      Southern California, <sup>3</sup>Technion, <sup>4</sup>University of Edinburgh</div>
+    <nav>
+      <a target="_self" href="https://arxiv.org/pdf/2605.26062"
+        aria-label="paper pdf">
+        <i class="icon fas fa-file-pdf"></i>Paper
+      </a>
+      <a target="_self" href="https://arxiv.org/abs/2605.26062"
+        aria-label="arxiv">
+        <i class="icon ai ai-arxiv"></i>ArXiv
+      </a>
+      <a target="_self" href="https://github.com/crosslift/crosslift"
+        aria-label="github">
+        <i class="icon fab fa-github"></i>GitHub
+      </a>
+    </nav>
+  </section>
+  
+  <!-- Floating mini-TOC pinned to the right edge on wide screens. JS
+       marks the entry corresponding to the current section as active. -->
+  <aside class="side-toc" aria-label="Page sections" data-toc>
+    <a href="#" data-section="intro">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Intro</span>
+    </a>
+    <a href="#method" data-section="method">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Method</span>
+    </a>
+    <a href="#gallery" data-section="gallery">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Gallery</span>
+    </a>
+    <a href="#applications" data-section="applications">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Applications</span>
+    </a>
+    <a href="#robustness" data-section="robustness">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Robustness</span>
+    </a>
+    <a href="#streamlines" data-section="streamlines">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Streamlines</span>
+    </a>
+    <a href="#comparison" data-section="comparison">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">Comparison</span>
+    </a>
+    <a href="#bibtex" data-section="bibtex">
+      <span class="side-toc-dot" aria-hidden="true"></span>
+      <span class="side-toc-label">BibTeX</span>
+    </a>
+  </aside>
+  
+  <p class="model-viewer-instruction">🖱️ To interact with the 3D models, <em>Scroll</em> to zoom, hold <em>Left Click + drag</em> to rotate, and hold <em>Right Click + drag </em> to translate.</p>
+  <p class="model-viewer-instruction">🔍 To zoom in on any visualization, <em>Click</em> the image or model to open it in a popup.</p>
+  <section class="teaser" aria-label="teaser">
+    <div class="teaser-layout">
+      <div class="teaser-refs">
+        <img src="assets/teaser/images/bunny0.png" alt="bunny reference image 1">
+        <img src="assets/teaser/images/bunny1.png" alt="bunny reference image 2">
+      </div>
+      <div class="teaser-cell">
+        <img src="assets/teaser/images/bunny_streamlines.png" alt="bunny streamlines">
+      </div>
+      <div class="teaser-cell">
+        <model-viewer src="assets/teaser/meshes/bunny_quads.glb"
+          alt="bunny quad mesh"
+          auto-rotate camera-controls
+          shadow-intensity="1.0" exposure="1.0"
+          rotation-per-second="30deg"
+          disable-tap></model-viewer>
+      </div>
+      <div class="teaser-cell">
+        <model-viewer src="assets/teaser/meshes/angel_quads.glb"
+          alt="angel quad mesh"
+          auto-rotate camera-controls
+          shadow-intensity="1.0" exposure="1.0"
+          rotation-per-second="30deg"
+          disable-tap></model-viewer>
+      </div>
+      <div class="teaser-cell">
+        <model-viewer src="assets/teaser/meshes/knot100K_quads.glb"
+          alt="knot quad mesh"
+          auto-rotate camera-controls
+          shadow-intensity="1.0" exposure="1.0"
+          rotation-per-second="30deg"
+          disable-tap></model-viewer>
+      </div>
+      <div class="teaser-cell">
+        <model-viewer src="assets/teaser/meshes/lego_quads.glb"
+          alt="lego quad mesh"
+          auto-rotate camera-controls
+          shadow-intensity="1.0" exposure="1.0"
+          rotation-per-second="30deg"
+          disable-tap></model-viewer>
+      </div>
+    </div>
+    <p class="graybox">
+      Our method <em>CrossLift</em> produces feature-aligned quad meshes
+      (<span class="text-blue">blue</span>) using directions
+      (<span class="text-red">red</span>) extracted from image-space quad
+      alignment priors (<span class="text-gray">gray</span>). These priors
+      encode both semantic and geometric information about the shape, allowing
+      our resulting quad meshes to capture meaningful semantic features
+      (e.g., the facial features of the cat) while adhering to local geometric
+      cues such as the sharp ridges of the Lego brick.
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>Method</h2>
+    <img class="fullwidth blcent" src="assets/method/overview.svg"
+      alt="method overview diagram.">
+    <p class="graybox">
+      <b>Method Overview.</b> Taking a mesh as input, our method renders depth from
+      multiple views using these to condition a 2D generative model which produces
+      multi-view images depicting a quad pattern on the mesh. We extract the alignment
+      directions from these images using pixel gradients and project those directions
+      back to the 3D surface. Here, we interpolate using two solves, first per-view to
+      accumulate the directions into a cross field over the faces and second to
+      interpolate these multi-view cross fields into a single smooth cross field for the
+      mesh.
+    </p>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <img class="fullwidth blcent" src="assets/gallery/web_gallery.svg"
+      alt="gallery of quad meshing results on organic and mechanical shapes.">
+    <p class="graybox">
+      <b>Gallery.</b> Our method produces desirable quads for a variety of shapes, both
+      organic and manufactured. The quad lines do not just follow geometric features:
+      our method generates quads whose edges follow semantic feature lines of the shapes
+      through our use of text-to-image priors and without any 3D interaction.
+    </p>
+  </section>
+
+  <section id="applications">
+    <h2>Applications</h2>
+    <div class="applications-pair figure-pair">
+      <figure class="blcent">
+        <figcaption class="caption">Texture-Aligned Quads</figcaption>
+        <img src="assets/applications/texture_alignment.svg"
+          alt="correspondence between image regions.">
+        <div class="caption caption-cols">
+          <span style="left: 10%;">Texture</span>
+          <span style="left: 40%;">w/o Texture</span>
+          <span style="left: 80%;">w/ Texture</span>
+        </div>
+      </figure>
+      <figure class="blcent">
+        <figcaption class="caption">Hand-Drawn Coarse 2D Guidance</figcaption>
+        <img src="assets/applications/user_lines.svg"
+          alt="texturing of a local shape region guided by the image.">
+      </figure>
+    </div>
+    <div class="graybox">
+      <p>
+        <b>Texture-Aligned Quads.</b> Given a <span class="text-red">textured mesh</span>
+        (left), we show the 2D prior output (<span class="text-gray">gray</span>) and
+        final quad mesh (<span class="text-blue">blue</span>) using either untextured
+        (middle) or textured (right) renders of the mesh to condition our 2D prior. Using
+        untextured renders produces quads aligned to the features of the shape, while
+        using textured renders allow our method to align quads to the features in the
+        texture.
+      </p>
+      <p>
+        <b>Hand-Drawn Coarse 2D Guidance.</b> Our method can extract signals from coarse
+        hand drawn alignment directions on renders of our mesh. This 2D guidance is easy
+        to create and provides fine-grained control to the user without requiring any 3D
+        technical knowledge or skills.
+      </p>
+    </div>
+  </section>
+
+  <section id="robustness">
+    <h2>Robustness</h2>
+    <figure class="fullwidth blcent">
+      <img src="assets/robustness/diff_priors.svg"
+        alt="robustness across different 2D visual priors.">
+      <figcaption class="caption caption-cols">
+        <span style="left: 16.67%;">Flux</span>
+        <span style="left: 50%;">Gemini 3</span>
+        <span style="left: 83.33%;">ChatGPT 5.2</span>
+      </figcaption>
+    </figure>
+    <p class="graybox">
+      <b>Compatibility with Alternative 2D Guidance Signals.</b> Our method is modular
+      and while we use Flux (left) for the results shown in the main paper, we also show
+      our method with alternative 2D priors Gemini 3 (middle) and ChatGPT 5.2 (right).
+      Our method is robust to alternative 2D guidance signals (shown in gray) producing
+      plausible semantically aligned quads in each case.
+    </p>
+    <div class="figure-pair">
+      <figure class="blcent">
+        <figcaption class="caption">Robustness to Surface Noise</figcaption>
+        <img src="assets/robustness/wrinkles.svg"
+          alt="robustness on shapes with fine surface detail such as wrinkles.">
+        <div class="caption caption-cols">
+          <span style="left: 16.67%;">Normals</span>
+          <span style="left: 50%;">Curvature-Aligned</span>
+          <span style="left: 83.33%;">Ours</span>
+        </div>
+      </figure>
+      <figure class="blcent">
+        <figcaption class="caption">Interpolation to Non-visible Mesh Regions</figcaption>
+        <img src="assets/robustness/smoothness_term.svg"
+          alt="effect of the smoothness term on the resulting cross field.">
+        <div class="caption caption-cols">
+          <span style="left: 16.67%;">Multi-View Crosses</span>
+          <span style="left: 50%;">Solve w/ $\lambda_s = 0$</span>
+          <span style="left: 83.33%;">Solve w/ $\lambda_s = 1$</span>
+        </div>
+      </figure>
+    </div>
+    <div class="graybox">
+      <p>
+        <b>Robustness to Surface Noise.</b> Our visually-guided method is robust to
+        surface noise such as the wrinkles in the tablecloth. A baseline method using
+        principal curvature constraints alongside a smoothness term aligns to these local
+        features producing undesirable edge flow and introducing additional singularities.
+      </p>
+      <p>
+        <b>Interpolation to Non-visible Mesh Regions.</b> Our method robustly produces a
+        smooth field even in regions that are not visible in the 2D views ($\ie$ the area
+        under the penguin's wing). Without the smoothness term ($\lambda_s = 0$), the
+        resulting field has holes and our quad mesh extraction fails. With this term
+        ($\lambda_s = 1$), we are able to smoothly interpolate the surrounding field to
+        get meaningful values in the unseen region.
+      </p>
+    </div>
+  </section>
+
+  <section id="streamlines">
+    <h2>Streamlines</h2>
+    <p class="model-viewer-instruction">✨ <em>Hover</em> over a streamline visualization to reveal the underlying mesh.</p>
+    <div class="streamlines-grid">
+      <figure class="streamlines-item">
+        <div class="streamlines-img-wrap">
+          <img class="streamlines-base" src="assets/streamlines/elephant_streamlines.png"
+            alt="elephant streamlines" data-no-zoom>
+          <img class="streamlines-hover" src="assets/streamlines/elephant.png"
+            alt="elephant mesh" data-no-zoom>
+        </div>
+      </figure>
+      <figure class="streamlines-item">
+        <div class="streamlines-img-wrap">
+          <img class="streamlines-base" src="assets/streamlines/teapot_streamlines.png"
+            alt="teapot streamlines" data-no-zoom>
+          <img class="streamlines-hover" src="assets/streamlines/teapot.png"
+            alt="teapot mesh" data-no-zoom>
+        </div>
+      </figure>
+      <figure class="streamlines-item">
+        <div class="streamlines-img-wrap">
+          <img class="streamlines-base" src="assets/streamlines/knot100K_streamlines.png"
+            alt="knot100K streamlines" data-no-zoom>
+          <img class="streamlines-hover" src="assets/streamlines/knot100K.png"
+            alt="knot100K mesh" data-no-zoom>
+        </div>
+      </figure>
+      <figure class="streamlines-item">
+        <div class="streamlines-img-wrap">
+          <img class="streamlines-base" src="assets/streamlines/santa_streamlines.png"
+            alt="santa streamlines" data-no-zoom>
+          <img class="streamlines-hover" src="assets/streamlines/santa.png"
+            alt="santa mesh" data-no-zoom>
+        </div>
+      </figure>
+      <figure class="streamlines-item">
+        <div class="streamlines-img-wrap">
+          <img class="streamlines-base" src="assets/streamlines/tri_lamp_streamlines.png"
+            alt="tri_lamp streamlines" data-no-zoom>
+          <img class="streamlines-hover" src="assets/streamlines/tri_lamp.png"
+            alt="tri_lamp mesh" data-no-zoom>
+        </div>
+      </figure>
+    </div>
+    <p class="graybox">
+      <b>Streamlines.</b> We visualize streamlines of our cross field
+      traced across the mesh surface. These streamlines show the field alignment used to
+      produce our final quad meshes.
+    </p>
+  </section>
+
+  <section id="comparison">
+    <h2>Comparison</h2>
+    <figure class="fullwidth blcent">
+      <img src="assets/comparisons/qual_comp.svg"
+        alt="qualitative comparison against QuadriFlow, QuadWild, and NeurCross">
+      <figcaption class="caption caption-cols">
+        <span style="left: 12.5%;">QuadriFlow</span>
+        <span style="left: 37.5%;">QuadWild</span>
+        <span style="left: 62.5%;">NeurCross</span>
+        <span style="left: 87.5%;">Ours</span>
+      </figcaption>
+    </figure>
+    <p class="graybox">
+      <b>Qualitative Comparison.</b> We compare our method to QuadriFlow, QuadWild and
+      NeurCross. QuadriFlow and QuadWild often produce wavy edge flow, while NeurCross
+      tends to produce overly axis-aligned edge flow that fails to align to specific
+      features. In contrast, our method produces edge flow that demonstrates superior
+      alignment to both semantic and geometric features.
+    </p>
+  </section>
+
+  <!-- Image lightbox: click any content image to open a zoomable popup. -->
+  <div id="image-lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button type="button" class="lightbox-close" aria-label="Close image preview">&times;</button>
+    <div class="lightbox-controls" role="group" aria-label="Zoom controls">
+      <button type="button" class="lightbox-btn" data-action="zoom-out" aria-label="Zoom out">&minus;</button>
+      <button type="button" class="lightbox-btn" data-action="zoom-reset" aria-label="Reset zoom">&#8634;</button>
+      <button type="button" class="lightbox-btn" data-action="zoom-in" aria-label="Zoom in">+</button>
+    </div>
+    <div class="lightbox-stage" data-stage>
+      <div class="lightbox-frame" data-frame>
+        <div class="lightbox-content" data-content>
+          <img class="lightbox-img" alt="" draggable="false">
+          <div class="lightbox-caption-mount" data-caption-mount></div>
+        </div>
+      </div>
+      <div class="lightbox-frame lightbox-frame--model" data-model-frame>
+        <model-viewer class="lightbox-model" data-model
+          auto-rotate camera-controls
+          shadow-intensity="1.0" exposure="1.0"
+          rotation-per-second="30deg"
+          disable-tap></model-viewer>
+      </div>
+    </div>
+    <p class="lightbox-hint">Scroll to zoom &middot; Drag to pan when zoomed &middot; Click anywhere to close</p>
+  </div>
+
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <div class="bibtex-wrapper">
+      <button type="button" class="bibtex-copy-btn" data-target="bibtex-code"
+        aria-label="Copy BibTeX entry to clipboard">
+        <span class="bibtex-copy-icon" aria-hidden="true">
+          <i class="far fa-copy"></i>
+        </span>
+        <span class="bibtex-copy-text">Copy</span>
+      </button>
+      <pre class="graybox" id="bibtex-code">@article{decatur2026look,
+  title   = {Look Both Ways Before You Cross: Lifting Cross Fields From 2D Visual Priors},
+  author  = {Decatur, Dale and Serfaty, Jacob and Stein, Oded and Vaxman, Amir and Hanocka, Rana},
+  journal = {arXiv preprint arXiv:2605.26062},
+  year    = {2026}
+}
+</pre>
+    </div>
+  </section>
+
+  <script>
+    // ---- BibTeX copy-to-clipboard ---------------------------------
+    (function () {
+      var btn = document.querySelector('.bibtex-copy-btn');
+      if (!btn) return;
+      var resetTimer = null;
+      btn.addEventListener('click', function () {
+        var target = document.getElementById(btn.dataset.target);
+        if (!target) return;
+        var text = target.innerText;
+        var done = function (ok) {
+          btn.classList.remove('is-success', 'is-error');
+          btn.classList.add(ok ? 'is-success' : 'is-error');
+          var label = btn.querySelector('.bibtex-copy-text');
+          if (label) label.textContent = ok ? 'Copied!' : 'Copy failed';
+          if (resetTimer) clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () {
+            btn.classList.remove('is-success', 'is-error');
+            if (label) label.textContent = 'Copy';
+          }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { done(true); },
+            function () { done(false); });
+        } else {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            done(ok);
+          } catch (err) {
+            done(false);
+          }
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

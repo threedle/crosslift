@@ -1,0 +1,1398 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+  --buttonshadowsz: 0px 4px 0px 0px;
+  --buttonshadowbigsz: 0px 5px 0px;
+  --dropshadow: 3px 3px 15px #23232348;
+  --buttontransform: translate(0px, 1.5px);
+  --accent: #69829E;
+  --accent-shaded: #A2B3C2;
+  --accentlight: #537998;
+  --shadowlight: 0px 0px 4px var(--accentlight);
+  --accentbg: #e9f0f7;
+  --accentbg-shaded: color-mix(in oklab, var(--accentbg) 70%, #46579b 30%);
+  --notwhite: #f5f5f5;
+  --notwhite-shaded: #aea9a3;
+  --fore: #363636;
+  --bordrad: 10px;
+  --accentbordersz: 1px none;
+  --halfwidthflex-w: 90%;
+  --medwidthflex-w: 100%;
+  --eqnwidthmult: 0.95;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--fore);
+  border-top: 36px solid var(--accent);
+}
+
+.page-header-bar {
+  height: 60px;
+  width: 100%;
+  background-color: var(--accentbg);
+}
+
+em {
+  color: var(--accent);
+}
+
+.intro,
+h1,
+h2 {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+.intro {
+  --iconsz: 32px;
+  --venuesz: 0.75rem;
+  --authors-relative-shift: 0;
+  --nav-upshift-mult: -0.5;
+  --nav-flex-basis: 25%;
+  --nav-special-flex-basis: 70%;
+  margin: 0px auto;
+  padding-top: 2px;
+  /* box-shadow: var(--shadow); */
+
+  .logos-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0.5rem auto 0;
+  }
+
+  .logobox {
+    width: var(--iconsz);
+    aspect-ratio: 1;
+    display: flex;
+
+    >img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      margin: auto;
+    }
+  }
+
+  .titlebox {
+    margin-top: calc(var(--iconsz) * 0.5);
+    margin-left: calc(var(--iconsz) * 0.66);
+    margin-right: calc(var(--iconsz) * 0.66);
+    padding: 3px calc(var(--iconsz) / 2);
+    font-size: 1.75rem;
+    text-align: center;
+
+    h1 {
+      margin-top: 0.2em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  nav {
+    margin-top: calc(-1 * var(--nav-upshift-mult) * var(--venuesz));
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+    column-gap: calc(0.5 * var(--venuesz));
+
+    >* {
+      display: block;
+      flex: 0 1 var(--nav-flex-basis);
+      border-radius: var(--bordrad);
+      background-color: var(--accent);
+      box-shadow: var(--buttonshadowsz) var(--accent-shaded), var(--dropshadow);
+      color: rgb(242, 247, 252);
+      padding: 0px calc(var(--venuesz) * 1.12);
+      font-size: var(--venuesz);
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    >.venue {
+      background-color: var(--notwhite);
+      box-shadow: var(--buttonshadowsz) var(--notwhite-shaded), var(--dropshadow);
+      color: var(--fore);
+      flex: 0 1 var(--nav-special-flex-basis);
+      text-align: center;
+      justify-content: center;
+    }
+
+    >.venue:hover {
+      background-color: var(--accentbg);
+      box-shadow: var(--shadowlight), var(--dropshadow);
+      transform: var(--buttontransform);
+    }
+
+    >a {
+      transition: background-color 0.1s;
+      text-decoration: none;
+      text-wrap: wrap auto;
+    }
+
+    >a:hover {
+      background-color: var(--accentlight);
+      box-shadow: var(--shadowlight), var(--dropshadow);
+      transform: var(--buttontransform);
+    }
+
+    .icon {
+      margin-right: 0.5rem;
+    }
+
+  }
+
+  .authors {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    width: 80%;
+    flex-wrap: wrap;
+    font-size: 1rem;
+
+    >* {
+      flex: auto;
+      text-align: center;
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  .affiliations {
+    text-align: center;
+    margin: 0px auto;
+    font-size: 1.3rem;
+  }
+
+  .note {
+    text-align: center;
+    margin: 10px auto;
+    font-size: 0.9rem;
+  }
+}
+
+video {
+  position: relative;
+}
+
+.qtrwidthflex {
+  display: block;
+  width: calc(0.5 * var(--halfwidthflex-w));
+  margin: 0px auto;
+}
+
+.teaser {
+  .qtrwidthflex {
+    text-align: center;
+
+    >video.srcshape {
+      width: 42%;
+      z-index: 3;
+    }
+
+    >video.rsltshape {
+      width: 84%;
+      z-index: 2;
+    }
+  }
+
+  video.srcshape {
+    width: 100%;
+  }
+}
+
+.teaser-layout {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 2fr);
+  gap: 0.5rem;
+  align-items: start;
+  margin: 0 auto;
+}
+
+.teaser-refs,
+.teaser-cell {
+  min-width: 0;
+}
+
+.teaser-refs img,
+.teaser-cell img,
+.teaser-cell model-viewer {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.teaser-cell model-viewer {
+  background-color: #ffffff;
+}
+
+.teaser-pair {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-width: 0;
+  gap: 0;
+}
+
+.teaser-images-col {
+  display: flex;
+  flex-direction: column;
+  /* space-around with 2 items places each item's vertical center at 1/4 and
+     3/4 of the column height, i.e. centered in the top and bottom halves. */
+  justify-content: space-around;
+  align-items: flex-end;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.teaser-images-col img {
+  /* Each image fills its half (top/bottom) of the viewer-height column. */
+  height: 50%;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.teaser-viewer-col {
+  flex: 2 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.teaser-viewer-col model-viewer {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #ffffff;
+}
+
+/* 4x4 qualitative-comparison grid: rows = meshes, cols = methods.
+   Each cell reuses .teaser-pair / .teaser-images-col / .teaser-viewer-col
+   so the per-cell layout (two stacked images + model-viewer) matches the
+   teaser exactly. */
+.qualcomp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem 0.75rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.qualcomp-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* In the comparison grid, the inset images sit to the right of the
+   model-viewer (opposite of the teaser's image-left order). row-reverse
+   flips just the visual order without changing HTML. */
+.qualcomp-grid .teaser-pair {
+  flex-direction: row-reverse;
+}
+
+/* Align images flush to the model-viewer edge now that they sit on its
+   right (the default flex-end in .teaser-images-col aligns to the OBJ
+   side, which is wrong after the reverse). */
+.qualcomp-grid .teaser-images-col {
+  align-items: flex-start;
+}
+
+.qualcomp-grid .teaser-images-col img {
+  border: 1px solid #000;
+  box-sizing: border-box;
+}
+
+.imgsflex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  >* {
+    flex: initial;
+  }
+
+  .marginhack {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+.flexgap {
+  gap: 8px;
+}
+
+
+section {
+  margin: 4px auto;
+}
+
+
+.blcent {
+  display: block;
+  margin: 0 auto;
+}
+
+.fullwidth {
+  width: 100%
+}
+
+.mediumwidth {
+  width: var(--medwidthflex-w);
+}
+
+.medsmallwidth {
+  width: calc(1.2 * var(--halfwidthflex-w));
+}
+
+.equationwidth {
+  --per-eqn-mult: 1;
+  width: calc(var(--per-eqn-mult) * var(--eqnwidthmult) * var(--medwidthflex-w));
+}
+
+.smallwidth {
+  width: calc(0.9 * var(--halfwidthflex-w));
+}
+
+.halfwidthflex {
+  display: block;
+  width: var(--halfwidthflex-w);
+  margin: 0px auto;
+}
+
+
+p {
+  font-size: 1.2rem;
+}
+
+.graybox {
+  border-radius: var(--bordrad);
+  box-shadow: var(--buttonshadowsz) var(--notwhite-shaded), var(--dropshadow);
+  background-color: var(--notwhite);
+  padding: 1.2rem 1.6rem;
+  /* Match the browser-default <p> margin so <div class="graybox"> sits
+     with the same gap to neighbors as <p class="graybox"> does. */
+  margin: 1em 0;
+}
+
+.step-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin: 0 0.1rem;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #666666;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 0%;
+  transform: translateY(-1px);
+}
+
+.text-green {
+  color: rgb(140, 180, 128);
+}
+
+.text-blue {
+  color: rgb(50, 100, 225);
+}
+
+.text-yellow {
+  color: rgb(245, 176, 0);
+}
+
+.text-red {
+  color: rgb(255, 0, 0);
+}
+
+.text-gray {
+  color: rgb(128, 128, 128);
+}
+
+figure {
+  margin: 0;
+}
+
+figure img {
+  width: 100%;
+  display: block;
+}
+
+figcaption.caption,
+.caption {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 0.4rem;
+}
+
+/* Multi-label caption: each <span> gets an inline `left: NN%` to place it
+   under a specific column of the figure above. Works on either a
+   <figcaption> or any element marked with .caption.caption-cols. */
+.caption.caption-cols {
+  position: relative;
+  text-align: left;
+  height: 1.4em;
+}
+
+.caption.caption-cols > span {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Gallery: two SVGs side-by-side that zoom together as one composite.
+   Flex-grow values are proportional to each SVG's intrinsic width so the
+   shared row height matches across both, leaving image bottoms flush. */
+.gallery-pair {
+  display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0 auto;
+  cursor: zoom-in;
+}
+
+.gallery-pair-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+}
+
+.gallery-pair-img:nth-child(1) { flex: 7832 1 0; }
+.gallery-pair-img:nth-child(2) { flex: 4989 1 0; }
+
+@media (max-width: 760px) {
+  .gallery-pair {
+    flex-direction: column;
+    align-items: center;
+  }
+  .gallery-pair-img:nth-child(1),
+  .gallery-pair-img:nth-child(2) { flex: 0 0 auto; width: 100%; }
+}
+
+/* Generic side-by-side figure pair (Applications, Robustness, ...).
+   Uses a 3-row subgrid (title / image / column-label caption) so the
+   image row is the same across both columns regardless of whether one
+   figure has a below-image caption-cols and the other doesn't. Images
+   are bottom-aligned within the row so the image bottoms are flush. */
+.figure-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  column-gap: 1.25rem;
+  margin: 0 auto;
+}
+
+.figure-pair > figure {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1 / span 3;
+  margin: 0;
+  min-width: 0;
+}
+
+.figure-pair > figure > img {
+  width: 100%;
+  display: block;
+  align-self: end;
+}
+
+/* When a caption sits above its image (as in side-by-side pairs where
+   the title figcaption is the first child of the figure), add bottom
+   spacing so it doesn't bump into the image. */
+figure > .caption:first-child {
+  margin-bottom: 0.4rem;
+}
+
+/* Stack the pair vertically when the section gets too narrow for both
+   figures to remain legible. */
+@media (max-width: 760px) {
+  .figure-pair {
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
+  .figure-pair > figure {
+    display: block;
+    grid-row: auto;
+  }
+}
+
+/* Streamlines section: 4-up grid of mesh thumbnails that swap to a
+   streamlines visualization on hover. Both images are stacked absolutely
+   inside a square wrapper; the hover image fades in via opacity. */
+.streamlines-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.streamlines-item {
+  margin: 0;
+  min-width: 0;
+}
+
+.streamlines-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.streamlines-img-wrap > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+.streamlines-img-wrap > .streamlines-hover {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.streamlines-img-wrap:hover > .streamlines-base {
+  opacity: 0;
+}
+
+.streamlines-img-wrap:hover > .streamlines-hover {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 760px) {
+  .streamlines-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Multi-paragraph graybox: keep the .graybox shadow/background but space
+   the inner paragraphs cleanly. */
+.graybox > p {
+  margin: 0;
+}
+
+.graybox > p + p {
+  margin-top: 1rem;
+}
+
+.grid-container-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 25px;
+}
+
+.grid-container-4:first-of-type {
+  margin-bottom: 1rem;
+}
+
+/* Hide gesture overlay (finger icon) on model-viewer */
+model-viewer::part(default-slotted-content) {
+  display: none !important;
+}
+
+model-viewer::after {
+  display: none !important;
+}
+
+.comparison-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.comparison-label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent);
+  min-height: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  order: 2;
+}
+
+.model-viewer-instruction {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 0;
+  margin-bottom: 0.1rem;
+  text-align: center;
+}
+
+.comparison-rotated model-viewer {
+  transform: rotateZ(90deg);
+}
+
+.comparison-content {
+  width: 100%;
+  height: 250px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  order: 1;
+}
+
+.comparison-content img {
+  max-width: 67%;
+  max-height: 67%;
+  object-fit: contain;
+}
+
+/* Move robotic arm image upwards */
+.grid-container-4:nth-of-type(2) .comparison-item:first-child img {
+  transform: translateY(-0.4em);
+}
+
+/* Style links in graybox */
+.graybox a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.graybox a:hover {
+  color: var(--accentlight);
+}
+
+.comparison-content model-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- BibTeX copy button ---- */
+.bibtex-wrapper {
+  position: relative;
+}
+
+.bibtex-wrapper pre {
+  line-height: 1.5;
+}
+
+.bibtex-copy-btn {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  line-height: 1;
+  color: #444;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+
+.bibtex-copy-btn:hover {
+  background: #ffffff;
+  color: #1f2933;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.bibtex-copy-btn:active {
+  transform: translateY(1px);
+}
+
+.bibtex-copy-btn:focus-visible {
+  outline: 2px solid #4a6fff;
+  outline-offset: 2px;
+}
+
+.bibtex-copy-btn.is-success {
+  background: #e7f8ee;
+  border-color: rgba(34, 153, 84, 0.55);
+  color: #1f7a4a;
+}
+
+.bibtex-copy-btn.is-error {
+  background: #fde7e3;
+  border-color: rgba(192, 57, 43, 0.55);
+  color: #a93226;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  text-align: center;
+  font-size: 2.3rem;
+  padding: 4px 1.2rem;
+  position: relative;
+}
+
+/* ---- Heading anchor links ---- */
+.heading-anchor {
+  position: absolute;
+  right: calc(100% + 0.45em);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  color: var(--accent);
+  opacity: 0;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85em;
+  transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  user-select: none;
+}
+
+section[id] h2:hover .heading-anchor,
+section[id] h2:focus-within .heading-anchor,
+.heading-anchor:focus,
+.heading-anchor:hover {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  color: var(--accentlight);
+  outline: none;
+}
+
+/* On narrow screens the anchor would push off the left edge */
+@media (max-width: 640px) {
+  .heading-anchor {
+    position: static;
+    display: block;
+    margin-bottom: 0.1em;
+    transform: none;
+    font-size: 0.7em;
+  }
+
+  section[id] h2:hover .heading-anchor,
+  section[id] h2:focus-within .heading-anchor {
+    transform: none;
+  }
+}
+
+/* ---- Floating side mini-TOC ----
+   Vertical stack of dots + labels pinned to the right edge. Hidden by
+   default and shown via .is-visible once the user has scrolled past
+   the intro. Hidden entirely on screens that don't have room for it. */
+.side-toc {
+  position: fixed;
+  top: 50%;
+  right: 0.9rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.side-toc.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.side-toc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.side-toc-label {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, color 0.18s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Reveal labels on hover of the whole TOC and always for the active entry. */
+.side-toc:hover .side-toc-label,
+.side-toc a.is-active .side-toc-label,
+.side-toc a:focus-visible .side-toc-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.side-toc a:hover .side-toc-dot,
+.side-toc a:focus-visible .side-toc-dot {
+  background: var(--accentlight);
+}
+
+.side-toc a.is-active .side-toc-dot {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px rgba(38, 57, 102, 0.15);
+}
+
+.side-toc a.is-active .side-toc-label {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Hide the side TOC on screens too narrow to fit it next to the page
+   without overlapping content. */
+@media (max-width: 1216px) {
+  .side-toc {
+    display: none;
+  }
+}
+
+i.nbsp:before {
+  content: "\a0"
+}
+
+i.wide-nbsp:before,
+i.med-nbsp:before {
+  content: " ";
+}
+
+pre {
+  overflow-x: auto;
+}
+
+@media (min-width: 100px) {
+  .intro {
+    --iconsz: 32px;
+    --venuesz: 0.75rem;
+    --authors-relative-shift: 0;
+    --nav-upshift-mult: -0.8;
+    --nav-flex-basis: 25%;
+    --nav-special-flex-basis: 70%;
+
+    .authors {
+      font-size: 1rem;
+    }
+
+    nav {
+      justify-content: center;
+      margin-right: auto;
+    }
+  }
+
+  section {
+    width: calc(94.5vw - 30px);
+    padding: 7px 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  :root {
+    --halfwidthflex-w: 90%;
+    --medwidthflex-w: 100%;
+    --eqnwidthmult: 1.1;
+  }
+
+
+}
+
+
+@media (min-width: 350px) {
+  .intro {
+    --iconsz: 48px;
+    --venuesz: 0.9rem;
+    --authors-relative-shift: 0.1;
+    --nav-upshift-mult: -0.8;
+    --nav-flex-basis: 25%;
+    --nav-special-flex-basis: 70%;
+
+    .authors {
+      font-size: 1.1rem;
+    }
+  }
+
+  section {
+    width: calc(92.5vw - 30px);
+    padding: 9px 20px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.55rem;
+  }
+
+
+  :root {
+    --halfwidthflex-w: 81%;
+    --eqnwidthmult: 1;
+  }
+
+}
+
+@media (min-width: 430px) {
+  .intro {
+    --nav-flex-basis: auto;
+    --nav-special-flex-basis: auto;
+
+    nav {
+      flex-wrap: nowrap;
+    }
+  }
+
+}
+
+@media (min-width: 660px) {
+  .intro {
+    --iconsz: 68px;
+    --venuesz: 1.05rem;
+    --authors-relative-shift: 0.19;
+    --nav-upshift-mult: -0.8;
+
+    .authors {
+      font-size: 1.2rem;
+    }
+  }
+
+  section {
+    width: calc(72vw + 80px - 30px);
+    padding: 11px 25px;
+
+  }
+
+  h1 {
+    font-size: 1.85rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  :root {
+    --halfwidthflex-w: 70%;
+    --medwidthflex-w: 92.5%;
+    --eqnwidthmult: 0.82;
+  }
+
+
+}
+
+@media (min-width: 900px) {
+  .intro {
+    --iconsz: 80px;
+    --venuesz: 1.1rem;
+    --authors-relative-shift: 0.28;
+    --nav-upshift-mult: -1.5;
+
+    .authors {
+      font-size: 1.25rem;
+    }
+
+    nav {
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  section {
+    width: calc(60vw + 190px - 30px);
+    padding: 12px 30px;
+
+  }
+
+  h1 {
+    font-size: 2.375rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  :root {
+    --halfwidthflex-w: 49%;
+    --medwidthflex-w: 90%;
+    --eqnwidthmult: 0.65;
+  }
+
+
+  i.med-nbsp:before {
+    content: "\a0";
+  }
+}
+
+@media (min-width: 1281px) {
+  .intro {
+    --iconsz: 80px;
+    --venuesz: 1.17rem;
+    --authors-relative-shift: 0.24;
+    --nav-upshift-mult: -1.5;
+
+    .authors {
+      font-size: 1.3rem;
+    }
+  }
+
+  section {
+    width: calc(50vw + 280px - 30px);
+    padding: 15px 35px;
+
+  }
+
+  .intro .titlebox {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: clamp(0px, calc((100vw - 1366px) * 0.25), calc(var(--iconsz) * 1.16));
+    padding-right: clamp(0px, calc((100vw - 1366px) * 0.25), calc(var(--iconsz) * 1.16));
+  }
+
+  h1 {
+    font-size: 2.65rem;
+  }
+
+  h2 {
+    font-size: 2.3rem;
+  }
+
+  :root {
+    --halfwidthflex-w: 49%;
+    --medwidthflex-w: 85%;
+    --eqnwidthmult: 0.55;
+  }
+
+}
+
+@media (min-width: 1700px) {
+  i.wide-nbsp:before {
+    content: "\a0";
+  }
+}
+
+/* Page footer */
+.page-footer {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--fore);
+}
+
+.page-footer p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.page-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.page-footer a:hover {
+  color: var(--accentlight);
+}
+
+/* ---- Image lightbox / zoom popup ---- */
+.is-zoomable {
+  cursor: zoom-in;
+}
+
+/* ---- "Pop" hover effect on popup-triggering figures.
+   Lift + drop-shadow signals these are click-to-zoom (TRELLIS-style).
+   Applies to standalone images, the streamlines swap pair, gallery
+   pairs, content <model-viewer>s (lightbox's own viewer excluded via
+   [data-model]), and the .caption.caption-cols that main.js clones
+   into the popup alongside the image. drop-shadow (not box-shadow) so
+   transparent PNGs/SVGs cast a shadow that follows the silhouette.
+   Figures containing a caption-cols are treated as one hover unit so
+   image + caption pop together — they share a single popup. */
+:root {
+  --pop-transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    filter 0.22s ease;
+  --pop-transform: translateY(-3px) scale(1.015);
+  --pop-filter: drop-shadow(0 8px 16px rgba(35, 35, 35, 0.22))
+                drop-shadow(0 2px 4px rgba(35, 35, 35, 0.10));
+}
+
+.is-zoomable,
+.streamlines-img-wrap,
+.gallery-pair,
+model-viewer:not([data-model]),
+figure:has(> .caption.caption-cols) > .caption.caption-cols {
+  transition: var(--pop-transition);
+}
+
+model-viewer:not([data-model]) {
+  border-radius: var(--bordrad);
+  overflow: hidden;
+}
+
+.is-zoomable:hover,
+.streamlines-img-wrap:hover,
+.gallery-pair:hover,
+model-viewer:not([data-model]):hover,
+figure:has(> .caption.caption-cols):hover > .is-zoomable,
+figure:has(> .caption.caption-cols):hover > .caption.caption-cols {
+  transform: var(--pop-transform);
+  filter: var(--pop-filter);
+}
+
+/* Avoid double-pop: when a .gallery-pair lifts as a whole, suppress
+   per-image pop on its inner imgs. */
+.gallery-pair .is-zoomable:hover {
+  transform: none;
+  filter: none;
+}
+
+.teaser-cell model-viewer:hover {
+  filter: none;
+}
+
+.teaser-layout .is-zoomable:hover {
+  transform: none;
+  filter: none;
+}
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 32, 0.22);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  cursor: zoom-out;
+}
+
+.lightbox.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.lightbox-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: content-box;
+  /* The white border doubles as the visible "frame" around the image.
+     overflow: hidden clips the (zoomed) image at the inner edge of the
+     border, so the frame's size — set once on load — stays constant. */
+  border: 0.6rem solid #fff;
+  background: #fff;
+  border-radius: var(--bordrad);
+  box-shadow: var(--buttonshadowsz) var(--notwhite-shaded), var(--dropshadow);
+  overflow: hidden;
+  cursor: zoom-out;
+  touch-action: none;
+}
+
+.lightbox-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  /* width set by JS; image + optional caption stack vertically */
+}
+
+.lightbox-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: width;
+}
+
+.lightbox-caption-mount:empty {
+  display: none;
+}
+
+/* Column-label captions cloned into the lightbox keep the page's accent
+   coloring. */
+
+/* ---- Lightbox: model-viewer (3D) mode ---- */
+
+/* The model-mode frame is a sibling of the image frame; only one is
+   shown at a time based on the .is-model-mode class on the lightbox. */
+.lightbox-frame--model {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(80vmin, 800px);
+  height: min(80vmin, 800px);
+  border: 0.6rem solid #fff;
+  background: #fff;
+  border-radius: var(--bordrad);
+  box-shadow: var(--buttonshadowsz) var(--notwhite-shaded), var(--dropshadow);
+  display: none;
+}
+
+.lightbox-model {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #ffffff;
+}
+
+.lightbox.is-model-mode .lightbox-frame--model {
+  display: block;
+}
+
+.lightbox.is-model-mode > .lightbox-stage > .lightbox-frame:not(.lightbox-frame--model),
+.lightbox.is-model-mode .lightbox-controls,
+.lightbox.is-model-mode .lightbox-hint {
+  display: none;
+}
+
+
+.lightbox-close,
+.lightbox-btn {
+  background: rgba(30, 34, 42, 0.88);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.lightbox-close:hover,
+.lightbox-btn:hover {
+  background: rgba(20, 24, 32, 0.95);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.lightbox-close:active,
+.lightbox-btn:active {
+  transform: translateY(1px);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.1rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 1.7rem;
+  line-height: 1;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.lightbox-controls {
+  position: absolute;
+  bottom: 3.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.lightbox-btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.2rem;
+  line-height: 1;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-hint {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  color: #fff;
+  background: rgba(30, 34, 42, 0.78);
+  border-radius: 999px;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .lightbox-hint { font-size: 0.75rem; }
+  .lightbox-controls { bottom: 2.8rem; }
+}
